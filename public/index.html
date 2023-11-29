@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIde</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+            @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Apply the animation to the h1 within welcome-content */
+        .welcome-content h1 {
+            animation: fadeIn 3s ease-in-out forwards;
+        }
+
+        #startButton {
+            opacity: 0;
+        }
+        #startButton {
+            animation: fadeIn 3s ease-in-out forwards;
+        }
+
+        
+                /* Welcome screen styles */
+        .welcome-screen {
+            position: fixed; /* Fixed position */
+            top: 0;
+            left: 0;
+            width: 100vw; /* Full viewport width */
+            height: 100vh; /* Full viewport height */
+            background-color: #faf3e0; /* Background color */
+            z-index: 1000; /* High z-index to ensure it's above other content */
+            display: flex; /* Use Flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            display: flex; /* Use Flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            text-align: center; /* Center text inside the flex container */
+        }
+
+        .dot-spinner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px; /* Set the height of the spinner */
+        }
+
+        .dot {
+            width: 8px; /* Size of dots */
+            height: 8px; /* Size of dots */
+            margin: 0 4px; /* Space between dots */
+            background-color: #d89266; /* Color of dots */
+            border-radius: 50%; /* Make the dots round */
+            animation: pulse 0.6s infinite alternate;
+        }
+
+/* Set up the keyframes for the pulse animation */
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.5);
+  }
+}
+
+/* Stagger the animation delays so the dots pulse in sequence */
+.dot:nth-child(1) {
+  animation-delay: 0s;
+}
+.dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+       
+/* Custom styles for quick reply buttons */
+.btn-outline-primary {
+    color: #d89266; /* Primary color text */
+    background-color: #fdfaf5; /* Soft white background */
+    border-color: #d89266; /* Primary color border */
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    color: #fff; /* White text on hover/focus */
+    background-color: #d89266; /* Primary color background on hover/focus */
+    border-color: #d89266; /* Primary color border on hover/focus */
+}
+
+/* Style for active state */
+.btn-outline-primary:active {
+    color: #fff; /* White text on active */
+    background-color: #bf7a58; /* Darker primary color for active state */
+    border-color: #bf7a58; /* Darker primary border on active state */
+}
+
+        /* Main content should be hidden initially */
+        .main-content {
+            display: none; /* Hidden until welcome screen is clicked */
+        }
+
+        /* After welcome screen is hidden, main content will take up the entire screen */
+        .main-content.active {
+            display: block; /* Or 'flex', depending on your layout needs */
+        }
+
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #faf3e0; 
+        }
+
+        h1 {
+            color: #d89266; 
+        }
+
+        .card {
+            border: none; 
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 15px; 
+            overflow: hidden; 
+        }
+
+        .card-header {
+            background-color: #ffe8d6;
+            font-weight: bold;
+            border: none;
+        }
+
+        button.btn-primary {
+            background-color: #d89266;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+        }
+
+        button.btn-primary:hover {
+            background-color: #bf7a58;
+        }
+
+        .input-group-text {
+            background-color: #ffe8d6;
+            border: none;
+        }
+
+        textarea.form-control {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        /* Modern chat conversation styles */
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #f7f7f7; /* Light background for the card */
+            overflow: hidden;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        .text-black {
+            color: black; /* Set text color to black */
+        }
+
+        /* Chat history styling */
+        #chat-history {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        /* Message bubble */
+        .chat-message {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .chat-message.you {
+            justify-content: flex-end;
+        }
+        .chat-message .message-content {
+            max-width: 60%;
+            padding: 10px;
+            border-radius: 15px;
+            margin: 5px;
+        }
+        .chat-message.them .message-content {
+            background-color: #e7e7e8;
+            border-top-left-radius: 0;
+        }
+        .chat-message.you .message-content {
+            background-color: #0084ff;
+            color: white;
+            border-top-right-radius: 0;
+        }
+
+        /* Scrollbar styling */
+        #chat-history::-webkit-scrollbar {
+            width: 5px;
+        }
+        #chat-history::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        #chat-history::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Input area */
+        .input-group {
+            margin-top: 15px;
+        }
+        .input-group-text {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-right: 0;
+        }
+        textarea.form-control {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border: 1px solid #ddd;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="welcome-screen" class="welcome-screen">
+        <div class="welcome-content">
+            <h1>Welcome to AI-de</h1>
+            <div class="d-flex justify-content-center">
+                <button id="startButton" class="btn btn-primary">Let's chat!</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="main-content">
+        <div id="quick-replies" class="text-center my-3">
+            <button class="btn btn-outline-primary mx-1" onclick="sendQuickReply('How can I improve my mood naturally?')">How can I improve my mood naturally?</button>
+            <button class="btn btn-outline-primary mx-1" onclick="sendQuickReply('Define anxiety.')">Define anxiety.</button>
+            <button class="btn btn-outline-primary mx-1" onclick="sendQuickReply('Calming music recommendations?')">Calming music recommendations?</button>
+        </div>
+        
+        <div class="container mt-5 w-50">
+            <h1 class="text-center">AI-de</h1>
+            <div class="card mb-4">
+                <div class="card-header">
+                    AI-de
+                </div>
+                <ul id="chat-history" class="list-group list-group-flush">
+                </ul>
+            </div>
+            <div class="input-group mb-4">
+                <span class="input-group-text">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                        fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        <path fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                    </svg>&nbspYou
+                </span>
+                <textarea id="user-input" class="form-control" aria-label="With textarea"></textarea>
+            </div>
+            <div class="text-center">
+                <button id="submit" type="button" class="btn btn-primary mt-2" >Ask AI-de</button>
+                <button id="pauseButton" type="button" class="btn btn-secondary mt-2">Pause</button>
+                <div id="spinner" class="dot-spinner visually-hidden" role="status">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', (event) => {
+        document.getElementById('startButton').addEventListener('click', function() {
+        document.getElementById('welcome-screen').style.display = 'none';
+        document.querySelector('.main-content').classList.add('active');
+        });
+    });
+        function sendQuickReply(message) {
+          userInput.value = message;
+          generateResponse();
+        }
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+    </script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
